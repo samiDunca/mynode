@@ -1,0 +1,60 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/01905bf0a9.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="assets/style.css" type="text/css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="container">
+          <div class="nav-items">
+            <h1 class="heading">Create Concert</h1>
+            <i class="fab fa-wpforms"> Hai wăi</i>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <form id="create-concert" action="" method="POST">
+        <div class="form-container">
+          <div class="item">
+            <label for="id">Insert ID</label>
+            <input
+              type="number"
+              id="numarat"
+              name="id"
+              value="<%= gs.person %>"
+            />
+          </div>
+          <div class="item">
+            <label for="id">Data</label>
+            <input type="date" id="numarat" name="id" value="{%ID%}" />
+          </div>
+          <div class="item">
+            <label for="id">City</label>
+            <input type="text" id="numarat" name="id" value="{%CITY%}" />
+          </div>
+          <div class="item">
+            <label for="id">Capacity</label>
+            <input type="number" id="numarat" name="id" value="{%CAPACITY%}" />
+          </div>
+          <div class="item">
+            <label for="id">Sold Tickets</label>
+            <input type="number" id="numarat" name="id" />
+          </div>
+          <!-- <div class="item"> -->
+          <input class="submit-btn" type="submit" value="submit" />
+          <!-- </div> -->
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
