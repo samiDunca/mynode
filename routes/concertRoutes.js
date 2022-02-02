@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const concertControllers = require('./../controllers/concertController');
 
-router.param('id', concertControllers.checkID);
+// router.param('id', concertControllers.checkID);
 
 router
   .route('/')
@@ -12,7 +12,7 @@ router
 router
   .route('/:id')
   .get(concertControllers.getConcert)
-  .patch(concertControllers.updateConcert)
+  .put(concertControllers.updateConcert)
   .delete(concertControllers.deleteConcert);
 
 module.exports = router;
