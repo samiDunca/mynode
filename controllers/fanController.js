@@ -1,89 +1,70 @@
 const Fan = require('./../models/fanModel');
+const catchAsync = require('./../utils/catchAsync');
 
-exports.getAllFans = async (req, res) => {
-  try {
-    const fans = await Fan.find();
+exports.getAllFans = catchAsync(async (req, res, next) => {
+  const fans = await Fan.find();
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        fans,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      fans,
+    },
+  });
+});
+
+exports.createFan = catchAsync(async (req, res, next) => {
+  const newFan = await Fan.create(req.body);
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      tour: newFan,
+    },
+  });
+});
+
+exports.getFan = catchAsync(async (req, res, next) => {
+  const fan = await Fan.findOne({ _id: req.params.id });
+
+  if (!fan) {
+    return next(new AppError('No member found with that ID', 404));
   }
-};
 
-exports.createFan = async (req, res) => {
-  try {
-    const newFan = await Fan.create(req.body);
+  res.status(200).json({
+    status: 'success',
+    data: {
+      fan,
+    },
+  });
+});
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        tour: newFan,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err,
-    });
+exports.updateFan = catchAsync(async (req, res, next) => {
+  const fan = await Fan.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!fan) {
+    return next(new AppError('No member found with that ID', 404));
   }
-};
 
-exports.getFan = async (req, res) => {
-  try {
-    const fan = await Fan.findOne({ _id: req.params.id });
-    res.status(200).json({
-      status: 'success',
-      data: {
-        fan,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      fan,
+    },
+  });
+});
 
-exports.updateFan = async (req, res) => {
-  try {
-    const fan = await Fan.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    res.status(200).json({
-      status: 'success',
-      data: {
-        fan,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+exports.deleteFan = catchAsync(async (req, res, next) => {
+  const fan = await Fan.findByIdAndDelete(req.params.id);
 
-exports.deleteFan = async (req, res) => {
-  try {
-    await Fan.findByIdAndDelete(req.params.id);
-    res.status(204).json({
-      status: 'succcess',
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
+  if (!fan) {
+    return next(new AppError('No member found with that ID', 404));
   }
-};
+
+  res.status(204).json({
+    status: 'succcess',
+    data: null,
+  });
+});
